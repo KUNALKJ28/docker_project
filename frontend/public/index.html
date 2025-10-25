@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask + Node Form</title>
+  </head>
+  <body>
+    <h2>Submit Form</h2>
+    <form id="dataForm">
+      <input type="text" name="name" placeholder="Name" required /><br />
+      <input type="email" name="email" placeholder="Email" required /><br />
+      <textarea name="message" placeholder="Message" required></textarea><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      document.getElementById("dataForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = {
+          name: e.target.name.value,
+          email: e.target.email.value,
+          message: e.target.message.value,
+        };
+
+        const res = await fetch("/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        alert("Response: " + JSON.stringify(data));
+      });
+    </script>
+  </body>
+</html>
